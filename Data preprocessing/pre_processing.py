@@ -2,6 +2,7 @@ import os
 import music21 as m21
 
 KERN_DATASET_PATH = "Data preprocessing/deutschl/test"
+SAVE_DIR = "Data preprocessing/dataset"
 ACCEPTABLE_DURATIONS = [
     0.25,
     0.5,
@@ -44,21 +45,55 @@ def transpose(song):
 
     return transposed_song
 
+def encode_song (song, time_step = 0.25):
+    encoded_song = []
+    for event in song.flat.notesAndRests:
+        #handle notes
+        if isinstance (event, m21.note.Note):
+            symbol = event.pitch.midi # 60
+        # handle rests
+        elif isinstance (event, m21.note.Rest):
+            symbol = ""
+        
+        #convert the note/rest into time series notation
+        steps = int(event.duration.quarterLength / time_step)
+        for step in range(steps):
+            if step== 0:
+                encoded_song.append(symbol)
+            else:
+                encoded_song.append("_")
+            
+    encoded_song = " ".join(map(str, encoded_song))
+
+    return encoded_song
+
 def preprocess(dataset_path):
 
     print('Loading Songs........')
     songs = load_songs_in_kern(dataset_path)
     print(f'loaded {len(songs)} songs.')
 
-    for song in songs:
+    for i, song in enumerate(songs):
+
+        # Filter not acceptable duration songs
         if not has_acceptable_durations(song, ACCEPTABLE_DURATIONS):
             continue
 
+        # Transpose songs to Cmajor/Aminor
         song = transpose(song)
+
+        # Encode songs with music time series representation 
+        encoded_song = encode_song(song)
+
+        # Save files
+        save_path = os.path.join(SAVE_DIR, str(i))
+        with open(save_path,'w') as fp:
+            fp.write(encoded_song)
 
 if __name__ == "__main__":
     songs = load_songs_in_kern(KERN_DATASET_PATH)
     print(f'loaded {len(songs)} songs.')
     song = songs[0]
-    trans = transpose(song)
-    trans.show()
+    preprocess(KERN_DATASET_PATH)
+    # trans = transpose(song)
+    # trans.show()
