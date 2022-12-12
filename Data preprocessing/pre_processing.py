@@ -1,8 +1,12 @@
 import os
+import json
 import music21 as m21
 
 KERN_DATASET_PATH = "Data preprocessing/deutschl/test"
 SAVE_DIR = "Data preprocessing/dataset"
+SINGLE_FILE_DATA_SET = "file_dataset"
+MAPPING_PATH = "mapping.json"
+SEQUENCE_LENGTH = 64
 ACCEPTABLE_DURATIONS = [
     0.25,
     0.5,
@@ -67,6 +71,11 @@ def encode_song (song, time_step = 0.25):
 
     return encoded_song
 
+def load(file_path):
+    with open(file_path,'r') as fp:
+        song = fp.read()
+    return song
+
 def preprocess(dataset_path):
 
     print('Loading Songs........')
@@ -89,11 +98,42 @@ def preprocess(dataset_path):
         save_path = os.path.join(SAVE_DIR, str(i))
         with open(save_path,'w') as fp:
             fp.write(encoded_song)
+        
+def create_single_file_dataset (dataset_path, file_dataset_path, sequence_length):
+    new_song_delimiter = "/ " * sequence_length
+    songs = ""
+    #load encoded songs and add delimiters
+    for path, _,files in os.walk (dataset_path):
+        for file in files:
+            file_path = os. path.join(path, file)
+            song = load(file_path)
+            songs = songs + song + " " + new_song_delimiter
+    
+    songs = songs[:-1]
+
+    with open(file_dataset_path, "w") as fp:
+        fp.write(songs)
+        return songs
+    
+def create_mapping (songs, mapping_path):
+    mappings = {}
+    
+    #identify the vocabulary
+    songs = songs.split()
+    vocabulary = list (set (songs))
+    
+    # create mappings
+    for i, symbol in enumerate (vocabulary):
+        mappings [symbol] = i
+    
+    #save voabulary to a json file
+    with open (mapping_path, "w") as fp:
+        json.dump(mappings, fp, indent=4)
+
+def main():
+    preprocess (KERN_DATASET_PATH)
+    songs = create_single_file_dataset (SAVE_DIR, SINGLE_FILE_DATA_SET, SEQUENCE_LENGTH)
+    create_mapping (songs, MAPPING_PATH)
 
 if __name__ == "__main__":
-    songs = load_songs_in_kern(KERN_DATASET_PATH)
-    print(f'loaded {len(songs)} songs.')
-    song = songs[0]
-    preprocess(KERN_DATASET_PATH)
-    # trans = transpose(song)
-    # trans.show()
+    main ()
