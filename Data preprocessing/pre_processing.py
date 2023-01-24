@@ -1,11 +1,13 @@
 import os
 import json
+import keras
+import numpy as np
 import music21 as m21
 
-KERN_DATASET_PATH = "Data preprocessing/deutschl/test"
-SAVE_DIR = "Data preprocessing/dataset"
-SINGLE_FILE_DATA_SET = "file_dataset"
-MAPPING_PATH = "mapping.json"
+KERN_DATASET_PATH = "Data preprocessing/deutschl/erk"
+SAVE_DIR = "dataset"
+SINGLE_FILE_DATA_SET = "C:\\Users\\Gopal\\Downloads\\Music Generation\\Music Generation\\file_dataset"
+MAPPING_PATH = "C:\\Users\\Gopal\\Downloads\\Music Generation\\Music Generation\\mapping.json"
 SEQUENCE_LENGTH = 64
 ACCEPTABLE_DURATIONS = [
     0.25,
@@ -52,14 +54,12 @@ def transpose(song):
 def encode_song (song, time_step = 0.25):
     encoded_song = []
     for event in song.flat.notesAndRests:
-        #handle notes
+
         if isinstance (event, m21.note.Note):
             symbol = event.pitch.midi # 60
-        # handle rests
         elif isinstance (event, m21.note.Rest):
             symbol = ""
         
-        #convert the note/rest into time series notation
         steps = int(event.duration.quarterLength / time_step)
         for step in range(steps):
             if step== 0:
@@ -84,17 +84,13 @@ def preprocess(dataset_path):
 
     for i, song in enumerate(songs):
 
-        # Filter not acceptable duration songs
         if not has_acceptable_durations(song, ACCEPTABLE_DURATIONS):
             continue
 
-        # Transpose songs to Cmajor/Aminor
         song = transpose(song)
 
-        # Encode songs with music time series representation 
         encoded_song = encode_song(song)
 
-        # Save files
         save_path = os.path.join(SAVE_DIR, str(i))
         with open(save_path,'w') as fp:
             fp.write(encoded_song)
@@ -118,17 +114,45 @@ def create_single_file_dataset (dataset_path, file_dataset_path, sequence_length
 def create_mapping (songs, mapping_path):
     mappings = {}
     
-    #identify the vocabulary
     songs = songs.split()
     vocabulary = list (set (songs))
     
-    # create mappings
     for i, symbol in enumerate (vocabulary):
         mappings [symbol] = i
     
-    #save voabulary to a json file
     with open (mapping_path, "w") as fp:
         json.dump(mappings, fp, indent=4)
+
+def convert_songs_to_int (songs):
+    int_songs = []
+    with open (MAPPING_PATH, "r") as fp:
+        mappings = json.load(fp)
+
+    songs = songs.split()
+
+    for symbol in songs:
+        int_songs.append(mappings[symbol])
+    
+    return int_songs
+
+def generate_training_sequences(sequence_length):
+    songs = load(SINGLE_FILE_DATA_SET)
+    int_songs = convert_songs_to_int(songs)
+
+    inputs = []
+    targets = []
+
+    num_sequences = len(int_songs) - sequence_length
+    for i in range(num_sequences):
+        inputs.append(int_songs[i:i+sequence_length])
+        targets.append(int_songs[i+sequence_length])
+
+    vocabulary_size = len(set(int_songs))
+    inputs = keras.utils.to_categorical(inputs, num_classes=vocabulary_size)
+    targets = np.array(targets)
+
+    return inputs, targets
+
 
 def main():
     preprocess (KERN_DATASET_PATH)
