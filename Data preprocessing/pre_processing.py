@@ -6,8 +6,8 @@ import music21 as m21
 
 KERN_DATASET_PATH = "Data preprocessing/deutschl/erk"
 SAVE_DIR = "dataset"
-SINGLE_FILE_DATA_SET = "C:\\Users\\Gopal\\Downloads\\Music Generation\\Music Generation\\file_dataset"
-MAPPING_PATH = "C:\\Users\\Gopal\\Downloads\\Music Generation\\Music Generation\\mapping.json"
+SINGLE_FILE_DATA_SET = "/content/drive/MyDrive/Music Generation/file_dataset"
+MAPPING_PATH = "Music Generation/mapping.json"
 SEQUENCE_LENGTH = 64
 ACCEPTABLE_DURATIONS = [
     0.25,
