@@ -28,11 +28,9 @@ The goal of this project is to:
 ---
 
 # Melody Generation using LSTM
-=====================================
 
 ## Installation
----------------
-
+---
 ### Clone the Repository
 #### Using Git
 ```bash
@@ -41,10 +39,7 @@ cd Melody-Generation-using-LSTM
 ```
 
 ## Dataset Preparation
-----------------------
-
-### Step 1: Place MIDI Files
-#### Add Your Files Here
+---
 Add your `.mid` files inside the `file_dataset/` directory.
 
 ### Step 2: Preprocess the Dataset
@@ -54,22 +49,19 @@ python preprocess.py
 ```
 
 ## Model Training
-----------------
-
+---
 ```bash
 python train.py
 ```
 
 ## Melody Generation
--------------------
-
+---
 ```bash
 python melodygenerator.py
 ```
 
 ## Model Architecture
----------------------
-
+---
 #### Input
 *   Integer-encoded musical sequences
 
@@ -78,13 +70,3 @@ python melodygenerator.py
 
 #### Dense Layer
 *   Predicts the next note (softmax activation)
-
-
-
-📊 Model Architecture
-
-    Input: Integer-encoded musical sequences
-
-    LSTM Layers: Capture sequence patterns
-
-    Dense Layer: Predicts the next note (softmax activation)
