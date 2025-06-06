@@ -6,46 +6,16 @@ A deep learning project that leverages Long Short-Term Memory (LSTM) networks to
 
 ## 📁 Project Structure
 
-
-### Root Directory
-```
 Melody-Generation-using-LSTM/
-```
+├── file_dataset/ # Directory containing MIDI files for training
+├── mapping.json # JSON file mapping notes to integers
+├── Data preprocessing/generator.py # Script to generate melodies using the trained model
+├── Data preprocessing/Model/ # Trained LSTM model
+├── Data preprocessing/pre_processing.py # Script for preprocessing MIDI files
+├── Data preprocessing/train.py # Script to train the LSTM model
+└── README.md # Project documentation
 
-### Subdirectories
-#### 1. `file_dataset/`
-```markdown
-# Directory containing MIDI files for training
-```
-#### 2. `mapping.json`
-```markdown
-# JSON file mapping notes to integers
-```
-#### 3. `Data preprocessing/`
-```markdown
-# Scripts for data preprocessing and model training
-```
-#### 4. `Data preprocessing/generator.py`
-```markdown
-# Script to generate melodies using the trained model
-```
-#### 5. `Data preprocessing/Model/`
-```markdown
-# Trained LSTM model
-```
-#### 6. `Data preprocessing/pre_processing.py`
-```markdown
-# Script for preprocessing MIDI files
-```
-#### 7. `Data preprocessing/train.py`
-```markdown
-# Script to train the LSTM model
-```
-#### 8. `README.md`
-```markdown
-# Project documentation
-```
----
+
 
 ## 🎯 Objective
 
@@ -55,7 +25,7 @@ The goal of this project is to:
 - Train an LSTM-based neural network to learn musical patterns.
 - Generate new melodies by predicting subsequent notes in a sequence.
 
----
+
 
 # Melody Generation using LSTM
 
