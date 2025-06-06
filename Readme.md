@@ -27,45 +27,64 @@ The goal of this project is to:
 
 ---
 
-## 🛠️ Installation
+# Melody Generation using LSTM
+=====================================
 
-### 1. Clone the repository
+## Installation
+---------------
 
+### Clone the Repository
+#### Using Git
 ```bash
 git clone https://github.com/ImSmitesh/Melody-Generation-using-LSTM.git
 cd Melody-Generation-using-LSTM
+```
 
----
+## Dataset Preparation
+----------------------
 
-## 🎼 Dataset Preparation
+### Step 1: Place MIDI Files
+#### Add Your Files Here
+Add your `.mid` files inside the `file_dataset/` directory.
 
-### 1. **Place MIDI files**
-
-   Add your `.mid` files inside the `file_dataset/` directory.
-
-### 2. **Preprocess the dataset**
-
+### Step 2: Preprocess the Dataset
+#### Run the Preprocess Script
 ```bash
 python preprocess.py
+```
 
-## 🧠 Model Training
-
-### 1. Train Model
-
-```bash
-python python train.py
-
-### 2. Generate using trained model
-
-## 🎹 Melody Generation
+## Model Training
+----------------
 
 ```bash
-python python melodygenerator.py
+python train.py
+```
 
----
+## Melody Generation
+-------------------
 
-## 📊 Model Architecture
+```bash
+python melodygenerator.py
+```
 
-1. Input: Integer-encoded musical sequences
-2. LSTM Layers: Capture sequence patterns
-3. Dense Layer: Predicts the next note (softmax activation)
+## Model Architecture
+---------------------
+
+#### Input
+*   Integer-encoded musical sequences
+
+#### LSTM Layers
+*   Capture sequence patterns
+
+#### Dense Layer
+*   Predicts the next note (softmax activation)
+
+
+
+📊 Model Architecture
+
+    Input: Integer-encoded musical sequences
+
+    LSTM Layers: Capture sequence patterns
+
+    Dense Layer: Predicts the next note (softmax activation)
