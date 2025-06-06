@@ -8,12 +8,12 @@ A deep learning project that leverages Long Short-Term Memory (LSTM) networks to
 
 ```plaintext
 Melody-Generation-using-LSTM/
-├── file_dataset/ # Directory containing MIDI files for training
-├── mapping.json # JSON file mapping notes to integers
-├── Data preprocessing/generator.py # Script to generate melodies using the trained model
-├── Data preprocessing/Model/ # Trained LSTM model
-├── Data preprocessing/pre_processing.py # Script for preprocessing MIDI files
-├── Data preprocessing/train.py # Script to train the LSTM model
+├── file_dataset/                           # Directory containing MIDI files for training
+├── mapping.json                            # JSON file mapping notes to integers
+├── Data preprocessing/generator.py         # Script to generate melodies using the trained model
+├── Data preprocessing/Model/               # Trained LSTM model
+├── Data preprocessing/pre_processing.py    # Script for preprocessing MIDI files
+├── Data preprocessing/train.py             # Script to train the LSTM model
 └── README.md # Project documentation
 ```
 
