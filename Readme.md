@@ -15,7 +15,7 @@ Melody-Generation-using-LSTM/
 ├── Data preprocessing/pre_processing.py # Script for preprocessing MIDI files
 ├── Data preprocessing/train.py # Script to train the LSTM model
 └── README.md # Project documentation
-
+```
 
 
 ## 🎯 Objective
