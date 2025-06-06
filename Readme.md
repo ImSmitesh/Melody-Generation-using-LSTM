@@ -6,6 +6,7 @@ A deep learning project that leverages Long Short-Term Memory (LSTM) networks to
 
 ## 📁 Project Structure
 
+```plaintext
 Melody-Generation-using-LSTM/
 ├── file_dataset/ # Directory containing MIDI files for training
 ├── mapping.json # JSON file mapping notes to integers
