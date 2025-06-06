@@ -46,7 +46,7 @@ Add your `.mid` files inside the `file_dataset/` directory.
 ### Step 2: Preprocess the Dataset
 #### Run the Preprocess Script
 ```bash
-python preprocess.py
+python pre_processing.py
 ```
 
 ## Model Training
@@ -58,7 +58,7 @@ python train.py
 ## Melody Generation
 
 ```bash
-python melodygenerator.py
+python generator.py
 ```
 
 ## Model Architecture
